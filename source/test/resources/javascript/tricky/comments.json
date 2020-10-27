@@ -1,0 +1,30 @@
+[
+  {
+    "content": "@replace Single-line comment",
+    "indentationWidth": 5
+  },
+  {
+    "content": "@replace Multiline comment ",
+    "indentationWidth": 5
+  },
+  {
+    "content": "@replace JavaDoc comment",
+    "indentationWidth": 5
+  },
+  {
+    "content": "Test strings which could be mistaken for comments.",
+    "indentationWidth": 7
+  },
+  {
+    "content": "Test regular expressions which could be mistaken for comments.",
+    "indentationWidth": 7
+  },
+  {
+    "content": "Test a comment which could be mistaken for a regular expression.",
+    "indentationWidth": 7
+  },
+  {
+    "content": "/i ",
+    "indentationWidth": 7
+  }
+]

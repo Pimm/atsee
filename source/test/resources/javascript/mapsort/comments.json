@@ -1,0 +1,274 @@
+[
+  {
+    "content": "Steal the forEach function from this empty array.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "@replace",
+    "indentationWidth": 3
+  },
+  {
+    "content": "Ensure the map callback is a function. [1]",
+    "indentationWidth": 5
+  },
+  {
+    "content": "throw new TypeError(`${mapCallback} is not a function`);",
+    "indentationWidth": 7
+  },
+  {
+    "content": "↓ (We are compiling this code with Babel, and our current configuration compiles the above into something",
+    "indentationWidth": 7
+  },
+  {
+    "content": "overly complex.)",
+    "indentationWidth": 7
+  },
+  {
+    "content": "Create an array which will contain the indexes (or \"indices\") of the items in the list.",
+    "indentationWidth": 5
+  },
+  {
+    "content": "Create an array which will contain the \"sortable\" values",
+    "indentationWidth": 5
+  },
+  {
+    "content": "Iterate over the items in the list, filling the two arrays (and filling the tail if any \"sortable\" value is",
+    "indentationWidth": 5
+  },
+  {
+    "content": "undefined).",
+    "indentationWidth": 5
+  },
+  {
+    "content": "Call the map callback to obtain the \"sortable\" value. [2]",
+    "indentationWidth": 7
+  },
+  {
+    "content": "If the \"sortable\" value is undefined, exclude this item from sorting and add it to the tail. undefined items",
+    "indentationWidth": 7
+  },
+  {
+    "content": "shall appear at the end of the resulting array. [3]",
+    "indentationWidth": 7
+  },
+  {
+    "content": "If the default compare function will be used, ensure the \"sortable\" value is not a symbol. That function does",
+    "indentationWidth": 7
+  },
+  {
+    "content": "not accept symbol values. [4] (This would not work if Symbol is polyfilled. However, Symbol is widely supported",
+    "indentationWidth": 7
+  },
+  {
+    "content": "and trying to sort a symbol is an edge case anyway. This shouldn't cause any real-world issues.)",
+    "indentationWidth": 7
+  },
+  {
+    "content": "Push the index to the array of indexes.",
+    "indentationWidth": 7
+  },
+  {
+    "content": "Add the \"sortable\" value to the array.",
+    "indentationWidth": 7
+  },
+  {
+    "content": "If no compare function was passed, use this default function. This mimics the behaviour of Array.prototype.sort",
+    "indentationWidth": 5
+  },
+  {
+    "content": "with no compare function.",
+    "indentationWidth": 5
+  },
+  {
+    "content": "Sort the indexes by looking up and comparing the \"sortable\" values associated with those indexes.",
+    "indentationWidth": 5
+  },
+  {
+    "content": "↓ We could guarantee stability by changing this line:",
+    "indentationWidth": 5
+  },
+  {
+    "content": "indexes.sort((firstIndex, secondIndex) => compareFunction(sortables[firstIndex], sortables[secondIndex]) || (firstIndex - secondIndex));",
+    "indentationWidth": 5
+  },
+  {
+    "content": "The indexes in the indexes array are now in the correct order. Create a new array which contains the original",
+    "indentationWidth": 5
+  },
+  {
+    "content": "values, but in that correct order, followed by the tail.",
+    "indentationWidth": 5
+  },
+  {
+    "content": "const result = [...indexes.map(index => list[index]), ...tail];",
+    "indentationWidth": 5
+  },
+  {
+    "content": "↓ (The line above is replaced by this line below for engines which don't support the spread syntax.)",
+    "indentationWidth": 5
+  },
+  {
+    "content": "In case the passed list is sparse \u2012 meaning it does not have a value for every index in [0\u2026length) \u2012 the result",
+    "indentationWidth": 5
+  },
+  {
+    "content": "array should include \"room\" for those missing values.",
+    "indentationWidth": 5
+  },
+  {
+    "content": "This implementation uses two temporary arrays, one which contains the indexes and one which contains \"sortable\"",
+    "indentationWidth": 3
+  },
+  {
+    "content": "values.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "Imagine we have this array as input:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[{number: 0xC6}, {number: 0x7B}, {number: 0xD5}]",
+    "indentationWidth": 3
+  },
+  {
+    "content": "and this map callback:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "object => object.number",
+    "indentationWidth": 3
+  },
+  {
+    "content": "and this compare function:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "(first, second) => first - second",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "This implementation sorts that input array in three steps. The first step is to create and fill the two temporary",
+    "indentationWidth": 3
+  },
+  {
+    "content": "arrays.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "The array of indexes will be:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[0, 1, 2]",
+    "indentationWidth": 3
+  },
+  {
+    "content": "The array of \"sortable\" values will be:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[0xC6, 0x7B, 0xD5]",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "As the second step, the array of indexes is sorted (in-place) to represent correct order.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "The array of indexes becomes:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[1, 0, 2]",
+    "indentationWidth": 3
+  },
+  {
+    "content": "(because 0x7B < 0xC6 < 0xD5).",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "Finally, the resulting array is created and filled according to the order defined by the array of indexes:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[{number: 0x7B}, {number: 0xC6}, {number: 0xD5}]",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "This implementation is designed to mimic [].map and [].sort as defined in ECMAScript 2015.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[1] See the spec for Array.prototype.map:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "4. If IsCallable(callbackfn) is false, throw a TypeError exception.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[2] See the spec for Array.prototype.map:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "10. d. iii. Let mappedValue be Call(callbackfn, T, «kValue, k, O»).",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[3] See the spec for SortCompare:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "2. If x is undefined, return 1.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "3. If y is undefined, return −1.",
+    "indentationWidth": 3
+  },
+  {
+    "content": "[4] See the spec for SortCompare:",
+    "indentationWidth": 3
+  },
+  {
+    "content": "5. Let xString be ToString(x).",
+    "indentationWidth": 3
+  },
+  {
+    "content": "6. ReturnIfAbrupt(xString).",
+    "indentationWidth": 3
+  },
+  {
+    "content": "7. Let yString be ToString(y).",
+    "indentationWidth": 3
+  },
+  {
+    "content": "8. ReturnIfAbrupt(yString).",
+    "indentationWidth": 3
+  }
+]
