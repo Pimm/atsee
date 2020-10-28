@@ -4,15 +4,29 @@ Automated documentation insertion for source code
 
 ---
 
-In some projects, I found myself manually synchronising documentation between different locations. I designed _atsee_
-to automate this process.
+Copying over documentation from spec to code or codebase to codebase takes up time and energy you would rather spend on other things. Keeping those copies in sync even more so.
+
+_atsee_ was designed to automate the insertion of documentation into source code.
+
+Instead of writing:
+```
+/**
+ * Returns the first element which …
+ */
+```
+you write:
+```
+/**
+ * @see docs:some-function
+ */
+```
 
 #### This framework does:
  * parse your source code ‒ finding comment blocks with `@see` in them ‒ and
  * replace those comment blocks with your documentation.
 
 #### This framework does not:
- * find the documentation to insert. You will have to supply that logic yourself.
+ * retrieve the documentation to insert. You will have to supply that logic yourself.
 
 ## Limitations
 
