@@ -20,7 +20,7 @@ class JavaScriptTest {
 		).forEach {name ->
 			val parsedFile = javaScript.parse(readText("source/test/resources/javascript/$name/input.js"))
 			// Compare the parsed file to the expected comments from the JSON document. (Note that this actually compares JSON
-			// as strings, so it could provide false negatives if the comments file is edited manually.)
+			// as text, so it could provide false negatives if the comments file is edited manually.)
 			assertEquals(
 				readText("source/test/resources/javascript/$name/comments.json"),
 				JSONArray().apply {
