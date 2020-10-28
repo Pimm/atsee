@@ -37,8 +37,10 @@ fun process(file: File, language: Language) {
 	var bail = true
 	parsedFile.comments.forEach { comment ->
 		findAtSee(comment.content)?.let { atSeeUri ->
-			parsedFile.replace(comment, getReplacement(atSeeUri, comment.content, comment.indentationWidth))
-			bail = false
+			getReplacement(atSeeUri, comment.content, comment.indentationWidth)?.let { replacement ->
+				parsedFile.replace(comment, replacement)
+				bail = false
+			}
 		}
 	}
 	// (Skip the rest if nothing has to be done for this file.)
@@ -49,6 +51,7 @@ fun process(file: File, language: Language) {
 /**
  * Returns the appropriate replacement for a comment which includes the passed @see URI.
  */
-fun getReplacement(atSeeUri: URI, original: String, indentationWidth: Int): String {
-	TODO("Please implement getReplacement")
+fun getReplacement(atSeeUri: URI, original: String, indentationWidth: Int): String? {
+	// TODO Implement
+	return null
 }
