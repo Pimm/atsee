@@ -29,21 +29,22 @@ val wrapText = run {
 			private set
 		override val length: Int
 			get() = 1
-		override fun get(index: Int): Char {
+		override fun get(index: Int): Char = original[this.index!!].also {
 			if (0 != index) {
 				throw IndexOutOfBoundsException("index must be 0")
 			}
-			return original[this.index!!]
 		}
+		/**
+		 * Moves the pointer to the passed index within the original `CharSequence`.
+		 */
 		fun move(index: Int): CharSequence {
 			this.index = index
 			return this
 		}
-		override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+		override fun subSequence(startIndex: Int, endIndex: Int): CharSequence = this.also {
 			if (0 != startIndex || 1 != endIndex) {
 				throw IndexOutOfBoundsException("subSequence may only be called for 0‒1")
 			}
-			return this
 		}
 	}
 	fun(input: String, width: Int, locale: Locale): String {
