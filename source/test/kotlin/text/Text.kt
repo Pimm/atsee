@@ -22,4 +22,27 @@ class Text {
 			)
 		}
 	}
+	@Test
+	fun parseQueryStringTest() {
+		assertEquals(
+			mapOf("timezone" to "Europe/Berlin"),
+			parseQueryString("timezone=Europe/Berlin")
+		)
+		assertEquals(
+			mapOf("timezone" to ""),
+			parseQueryString("timezone=")
+		)
+		assertEquals(
+			mapOf("timezone" to null),
+			parseQueryString("timezone")
+		)
+		assertEquals(
+			mapOf("x" to "5", "y" to "-4"),
+			parseQueryString("x=5&y=-4")
+		)
+		assertEquals(
+			mapOf("query" to "l0v="),
+			parseQueryString("query=l0v=")
+		)
+	}
 }
