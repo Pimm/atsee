@@ -88,7 +88,8 @@ class JavaScript : Language {
 		}
 		// Return an object which contains the comments and is capable of replacing the content of said comments.
 		return object : ParsedFile(comments) {
-			private val verticalWhitespacePattern = Regex("\\v++")
+			private val verticalWhitespacePattern = Regex("\\v")
+			private val horizontalWhitespaceLinePattern = Regex("^\\h*+$")
 			override fun finalize(): String {
 				// Sort the jobs by the place the comment has in the content.
 				jobs.sortBy { (it.comment as Comment).range.first }
@@ -102,7 +103,11 @@ class JavaScript : Language {
 					// Add the replacement for this comment.
 					             .append(comment.indentation).append("/**\n")
 					job.replacement.split(verticalWhitespacePattern).forEach { replacementLine ->
-						resultBuilder.append(comment.indentation).append(" * ").append(replacementLine).append('\n')
+						if (horizontalWhitespaceLinePattern.matches(replacementLine)) {
+							resultBuilder.append(comment.indentation).append(" *\n")
+						} else {
+							resultBuilder.append(comment.indentation).append(" * ").append(replacementLine).append('\n')
+						}
 					}
 					resultBuilder.append(comment.indentation).append(" */")
 					// Increase the index.

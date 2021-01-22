@@ -8,12 +8,10 @@ private val atSeePattern = Regex("^@see\\h++(.++)$", setOf(RegexOption.IGNORE_CA
  *
  * (If multiple `"@see"`s exist in the input, all except the first one will be ignored.)
  */
-fun findAtSee(input: String): URI? {
-	return atSeePattern.find(input)?.let { matchResult ->
-		try {
-			URI(matchResult.groups[1]!!.value)
-		} catch (exception: URISyntaxException) {
-			null
-		}
+fun findAtSee(input: String): URI? = atSeePattern.find(input)?.let { matchResult ->
+	try {
+		URI(matchResult.groups[1]!!.value)
+	} catch (exception: URISyntaxException) {
+		null
 	}
 }

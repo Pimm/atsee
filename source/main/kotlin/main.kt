@@ -11,7 +11,6 @@ val languages = run {
 	val javaScript = JavaScript()
 	mapOf<String, Language>("js" to javaScript, "ts" to javaScript)
 }
-val utf8: Charset = Charset.forName("utf8")
 fun main(arguments: Array<String>) {
 	visit(File(arguments[0]))
 }
@@ -32,7 +31,7 @@ fun visit(file: File) {
  */
 fun process(file: File, language: Language) {
 	// Parse the file.
-	val parsedFile = language.parse(file.readText(utf8))
+	val parsedFile = language.parse(file.readText(Charsets.UTF_8))
 	// Determine whether any of the comments contains "@see". Find an appropriate replacement for the comment if so.
 	var bail = true
 	parsedFile.comments.forEach { comment ->
@@ -46,7 +45,7 @@ fun process(file: File, language: Language) {
 	// (Skip the rest if nothing has to be done for this file.)
 	if (bail) return
 	// Finalise and overwrite the file.
-	file.writeText(parsedFile.finalize(), utf8)
+	file.writeText(parsedFile.finalize(), Charsets.UTF_8)
 }
 /**
  * Returns the appropriate replacement for a comment which includes the passed @see URI.
