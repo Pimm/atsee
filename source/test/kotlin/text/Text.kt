@@ -26,7 +26,7 @@ class Text {
 	fun parseQueryStringTest() {
 		assertEquals(
 			mapOf("timezone" to "Europe/Berlin"),
-			parseQueryString("timezone=Europe/Berlin")
+			parseQueryString("timezone=Europe%2FBerlin")
 		)
 		assertEquals(
 			mapOf("timezone" to ""),
@@ -43,6 +43,18 @@ class Text {
 		assertEquals(
 			mapOf("query" to "l0v="),
 			parseQueryString("query=l0v=")
+		)
+		assertEquals(
+			mapOf("query" to "Hi everyone!"),
+			parseQueryString("query=Hi%20everyone!")
+		)
+		assertEquals(
+			mapOf("query" to "合気道"),
+			parseQueryString("query=%E5%90%88%E6%B0%97%E9%81%93")
+		)
+		assertEquals(
+			mapOf("query" to "Kanî"),
+			parseQueryString("query=Kan%c3%ae")
 		)
 	}
 }
