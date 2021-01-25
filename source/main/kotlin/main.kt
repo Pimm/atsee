@@ -2,7 +2,6 @@ import language.JavaScript
 import language.Language
 import java.io.File
 import java.net.URI
-import java.nio.charset.Charset
 
 /**
  * Maps file extensions to the appropriate language.
