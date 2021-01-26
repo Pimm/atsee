@@ -13,21 +13,28 @@ private val encodedCharacterPattern = Regex("(?:%[\\da-f]{2})+", RegexOption.IGN
  */
 private fun CharSequence.decodeAsUriComponent(): String {
 	val resultBuilder = StringBuilder(length)
-	var bytes: ByteBuffer? = null
-	// Find all encoded characters.
-	var index = 0;
+	val getByteBuffer = run {
+		var recyclable: ByteBuffer? = null
+		return@run fun(capacity: Int): ByteBuffer {
+			if (recyclable?.capacity() == capacity) {
+				recyclable!!.rewind()
+			} else {
+				recyclable = ByteBuffer.allocate(capacity)
+			}
+			return recyclable!!
+		}
+	}
+	// Find all escaped sequences.
+	var index = 0
 	var matchResult = encodedCharacterPattern.find(this, index)
 	while (null != matchResult) {
 		// Add the substring before the matched escaped sequence to the result.
 		resultBuilder.append(this, index, matchResult.range.first)
 		// Collect the bytes which form the escaped sequence.
-		bytes = (matchResult.value.length / 3).let { capacity ->
-			// (Either allocate a new buffer or recycle the previous one if it has the correct capacity.)
-			if (bytes?.capacity() == capacity) bytes!!.rewind() else ByteBuffer.allocate(capacity)
-		}
+		val bytes = getByteBuffer(matchResult.value.length / 3)
 		index = matchResult.range.first
 		do {
-			bytes!!.put(Integer.parseInt(substring(index + 1, index + 3), 0x10).toByte())
+			bytes.put(Integer.parseInt(this, index + 1, index + 3, 0x10).toByte())
 			index += 3
 		} while (index < matchResult.range.last)
 		// Decode those bytes, and add them to the result.
